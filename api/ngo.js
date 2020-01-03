@@ -1,6 +1,6 @@
 const
     express = require("express"),
-    bcrypt = require("bcrypt"),
+    // bcrypt = require("bcrypt"),
     jwt = require("jsonwebtoken"),
     router = express.Router(),
     {checkNgoEmailExists} = require('../ngo/NgoRepository'),
