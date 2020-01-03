@@ -3,11 +3,10 @@ const DB_NAME = 'ngos_courses';
 
 function createDatabaseConnection(callback) {
     const connection = mysql.createConnection({
-        host: '127.0.0.1',
+        host: 'localhost',
         user: 'root',
-        password: '123',
+        password: '12345',
         database: DB_NAME,
-        port: 3306
     });
 
     connection.connect(error => {
