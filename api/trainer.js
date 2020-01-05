@@ -2,6 +2,7 @@ const
     express = require("express"),
     router = express.Router(),
     mysql = require('mysql'),
+    bodyParser = require('body-parser'),
     routeBase = '/trainer',
     fs = require('fs')
 ;
@@ -28,15 +29,15 @@ router.post( routeBase , ( req , res ) =>{
     let trainerphoto = req.body.photo; 
     let trainerbio = req.body.bio;
 
-    // let base64Image = trainerphoto.split(';base64,').pop();
+    let base64Image = trainerphoto.split(';base64,').pop();
 
-    // fs.writeFile('./imeges/trainers/img.png', base64Image, {encoding: 'base64'}, function(err) {
-    //     console.log('File created');
-    // });
-    
+    fs.writeFile("C:/Users/pc/Desktop/ngos/ngo-courses-api/imeges/trainers/"+trainerEmail+trainerNumber+".png", base64Image, {encoding: 'base64'}, function(err) {
+        console.log('File created');
+    });
+    let imgpath = "C:/Users/pc/Desktop/ngos/ngo-courses-api/imeges/trainers/"+trainerEmail+trainerNumber+".png"
 
 
-    const sql = "INSERT INTO trainers  ( `name`,`picture`, `email`, `mobile`, `address`, `short_bio`) VALUES ( '" +trainerName +" ', '" + trainerphoto+" ', '" + trainerEmail+" ', '" + trainerNumber + " ', '" + traineraddress + "', '" + trainerbio + "' ) ;" ;
+    const sql = "INSERT INTO trainers  ( `name`,`picture`, `email`, `mobile`, `address`, `short_bio`) VALUES ( '" +trainerName +" ', '" + imgpath +" ', '" + trainerEmail+" ', '" + trainerNumber + " ', '" + traineraddress + "', '" + trainerbio + "' ) ;" ;
     con.query(sql, function(err,result){
         console.log(err);
         console.log(result);
