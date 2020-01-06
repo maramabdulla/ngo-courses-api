@@ -11,7 +11,7 @@ var con = mysql.createConnection({
     host: "localhost",
     user: "root",
     password: "9951061722",
-    database : "ngo_courses"
+    database : "ngos_courses"
   });
   
   con.connect(function(err) {
@@ -31,10 +31,10 @@ router.post( routeBase , ( req , res ) =>{
 
     let base64Image = trainerphoto.split(';base64,').pop();
 
-    fs.writeFile("C:/Users/pc/Desktop/ngos/ngo-courses-api/imeges/trainers/"+trainerEmail+trainerNumber+".png", base64Image, {encoding: 'base64'}, function(err) {
+    fs.writeFile("C:/Users/ahmad/Desktop/ngo-courses-api/imeges/trainers/"+trainerEmail+trainerNumber+".png", base64Image, {encoding: 'base64'}, function(err) {
         console.log('File created');
     });
-    let imgpath = "C:/Users/pc/Desktop/ngos/ngo-courses-api/imeges/trainers/"+trainerEmail+trainerNumber+".png"
+    let imgpath = "C:/Users/ahmad/Desktop/ngo-courses-api/imeges/trainers/"+trainerEmail+trainerNumber+".png"
 
 
     const sql = "INSERT INTO trainers  ( `name`,`picture`, `email`, `mobile`, `address`, `short_bio`) VALUES ( '" +trainerName +" ', '" + imgpath +" ', '" + trainerEmail+" ', '" + trainerNumber + " ', '" + traineraddress + "', '" + trainerbio + "' ) ;" ;
