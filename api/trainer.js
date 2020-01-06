@@ -10,7 +10,7 @@ const
 var con = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "9951061722",
+    password: "12345",
     database : "ngos_courses"
   });
   
