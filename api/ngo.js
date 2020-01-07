@@ -32,6 +32,10 @@ if(checkName.test(name) == true && checkEmail.test(email) == true && checkPasswo
                             res.status(404).send("Not Found");
                         }else{
                             console.log(result)
+<<<<<<< HEAD
+=======
+                            
+>>>>>>> 75b423706714390643eb64bcfb66cdc41bfc4a50
                         }
                         let id = result.insertId
                      let tokenSignUp = jwt.sign({id:id,email:email,password:hashedpassword},key)
@@ -44,7 +48,11 @@ if(checkName.test(name) == true && checkEmail.test(email) == true && checkPasswo
                 }
             })
         }else{
+<<<<<<< HEAD
             res.status(226).send({status:"your Email is Exists"});
+=======
+            res.status(226).send({states:"your Email is Exists"});
+>>>>>>> 75b423706714390643eb64bcfb66cdc41bfc4a50
         }
     })
 }else{
