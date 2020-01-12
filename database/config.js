@@ -6,9 +6,7 @@ function createDatabaseConnection(callback) {
         host: 'localhost',
         user: 'root',
         password: '12345',
-<<<<<<< HEAD
-=======
-        database: DB_NAME,
+        database: DB_NAME
     });
 
     connection.connect(error => {
@@ -31,7 +29,7 @@ function createDatabaseConnection(callback) {
         host: 'localhost',
         user: 'root',
         password: '12345',
->>>>>>> 75b423706714390643eb64bcfb66cdc41bfc4a50
+
         database: DB_NAME,
     });
 
