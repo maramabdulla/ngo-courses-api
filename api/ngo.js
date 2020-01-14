@@ -4,7 +4,6 @@ const
     jwt = require("jsonwebtoken"),
     router = express.Router(),
     {checkNgoEmailExists,addNgoAccount,checkPasswordDB,showNameWithLogIn} = require('../ngo/NgoRepository'),
-    
     routeBase = '/ngo'
 ;
 //.....................................
@@ -15,16 +14,19 @@ router.post(routeBase + '/register', (req, res) => {
     let password     = req.body.password;
     const checkName  = /^[a-z]|[0-9]/i;
     const checkEmail = /[a-z0-9_\.\-]+@+[a-z_\.\-]+\.+[a-z]/i;
+<<<<<<< HEAD
 const checkPassword  = /[a-z]+|[0-9]+|\!+|\@+|\#+|\$+|\%+|\&/i;
+=======
+    const checkPassword = /[a-z]+|[0-9]+|\!+|\@+|\#+|\$+|\%+|\&/i;
+>>>>>>> 1c3954abd12aee16ffdbaa07b37ca423de002280
 if(checkName.test(name) == true && checkEmail.test(email) == true && checkPassword.test(password) == true) {
-    console.log(password)
-    checkNgoEmailExists(email, (error, exists) => {
-        console.log(error);
-        if(exists==0){
-            bcrypt.hashPassword(password,8,(err,hashedpassword)=>{
-                if(err){
-                    res.status(404).send("Not Found");
+    checkNgoEmailExists(email, (EmailDidNotExisit, EmailExisted) => {
+        if(EmailExisted==0){
+            bcrypt.hashPassword(password,8,(HashingDidNotWork,HashingPasswordWorked)=>{
+                if(HashingDidNotWork){
+                    res.status(500);
                 }else{
+<<<<<<< HEAD
                     addNgoAccount(name,email,hashedpassword,(err,result)=>{
                         console.log(email)
                         console.log(result)
@@ -35,54 +37,57 @@ if(checkName.test(name) == true && checkEmail.test(email) == true && checkPasswo
 
 
                         
+=======
+                    addNgoAccount(name,email,HashingPasswordWorked,(addNgoAccountFiled,addNgoAccountSuccessed)=>{
+                        if(addNgoAccountFiled){
+                            res.status(500);
+                        }else{   
+                            let id = addNgoAccountSuccessed.insertId
+                            let tokenSignUp = jwt.sign({id:id,email:email,password:HashingPasswordWorked},key)
+                           res.status(201).send({id:id,token:tokenSignUp}); 
+>>>>>>> 1c3954abd12aee16ffdbaa07b37ca423de002280
                         }
-                        let id = result.insertId
-                     let tokenSignUp = jwt.sign({id:id,email:email,password:hashedpassword},key)
-                        console.log(id)
-                    
-                    res.send({id:id,token:tokenSignUp});
-                    
-                    console.log(tokenSignUp)
+                       
                     });
                 }
             })
         }else{
+<<<<<<< HEAD
 
             res.status(226).send({status:"your Email is Exists"});
 
             res.status(226).send({states:"your Email is Exists"});
 
+=======
+            res.send({status:226})
+>>>>>>> 1c3954abd12aee16ffdbaa07b37ca423de002280
         }
     })
 }else{
 
-    console.log("your information dosent write")
+    res.status(400)
 }
 });
 //...........................
 router.post(routeBase + '/login', (req, res) => {
 let email = req.body.email;
 let password = req.body.password;
-checkPasswordDB(email,(err,result)=>{
-    if(result.length>0){
-        bcrypt.comparePassword(password,result[0].password,(err,result)=>{
-            console.log(result)
-            if(result == true){ 
-                showNameWithLogIn(email , (error , data)=>{
-                    console.log(data[0].name,data[0].id,data[0].password)
-                    let id = data[0].id
-                    console.log(id)
-                    let passwordToken = data[0].password
-                    console.log(passwordToken)
+checkPasswordDB(email,(err,FindPasswordByEmail)=>{
+    if(FindPasswordByEmail.length>0){
+        bcrypt.comparePassword(password,FindPasswordByEmail[0].password,(err,CompareDone)=>{
+            if(CompareDone == true){ 
+                showNameWithLogIn(email , (error , NameUser)=>{
+                    let id = NameUser[0].id
+                    let passwordToken = NameUser[0].password
                     let tokenLogIn = jwt.sign({id:id , email:email , password:passwordToken},key)
-                res.status(200).send({succse:"Welcome to my website : " + data[0].name ,token:tokenLogIn,id:id})
+                res.send({status:200, token:tokenLogIn,id:id})
             })
             }else{
-                res.send({passWrong:"your password wrong or doesn't Exist"})
+                res.send({status:400})
             }
     })
     }else{
-        res.status(404).send({EmailWrong:"Your Email doesn't Exist"})
+        res.send({status:404})
     }
 })
 })
