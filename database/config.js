@@ -6,8 +6,6 @@ function createDatabaseConnection(callback) {
         host: 'localhost',
         user: 'root',
         password: '12345',
-<<<<<<< HEAD
-=======
         database: DB_NAME,
     });
 

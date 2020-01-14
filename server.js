@@ -10,9 +10,9 @@ const
 
 app.use(express.json({limit:'50mb'}));
 app.use(bodyParser.json());
-app.use(ngo);
-app.use(trainers);
-app.use(courses);
+// app.use(ngo);
+// app.use(trainers);
+// app.use(courses);
 app.listen(port, () => {
     console.log(`server is listening on port ${port}`);
 });

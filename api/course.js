@@ -34,13 +34,13 @@ const
     });
 
     router.post( routeBase ,(req,res)=>{
-        let title = req.body.title;
-        let date=req.body.dates;
-      let dateEnd=req.body.dateEnd;
-        let locations=req.body.location;
-        let range_weight=req.body.number_of_seats;
-        let remain=req.body.remain;
-        let desc=req.body.desctiption;
+        let title        = req.body.title;
+        let date         = req.body.dates;
+        let dateEnd      = req.body.dateEnd;
+        let locations    = req.body.location;
+        let range_weight = req.body.number_of_seats;
+        let remain       = req.body.remain;
+        let des          = req.body.desctiption;
     let sql=' INSERT INTO `ngos_courses`.`courses` (`title`,`dates`,`dateEnd`,`location`,`number_of_seats`,`remainSeats`,`description`) VALUES ('+ `'${title}'`+","+`'${date}'`+","+`'${dateEnd}'`+","+`'${locations}'`+","+`'${range_weight}'`+","+`'${remain}'`+","+`'${desc}'`+')';
         connection.query(sql,(err,result)=>{
             console.log(err);

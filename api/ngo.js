@@ -10,12 +10,12 @@ const
 //.....................................
 const key = "iwearft54aw7eg6yq3urt4jy4567idfhjgkuiyut";
 router.post(routeBase + '/register', (req, res) => {
-    let name=req.body.name;
-    let email=req.body.email;
-    let password=req.body.password;
-    const checkName = /^[a-z]|[0-9]/i;
+    let name         = req.body.name;
+    let email        = req.body.email;
+    let password     = req.body.password;
+    const checkName  = /^[a-z]|[0-9]/i;
     const checkEmail = /[a-z0-9_\.\-]+@+[a-z_\.\-]+\.+[a-z]/i;
-const checkPassword = /[a-z]+|[0-9]+|\!+|\@+|\#+|\$+|\%+|\&/i;
+const checkPassword  = /[a-z]+|[0-9]+|\!+|\@+|\#+|\$+|\%+|\&/i;
 if(checkName.test(name) == true && checkEmail.test(email) == true && checkPassword.test(password) == true) {
     console.log(password)
     checkNgoEmailExists(email, (error, exists) => {
@@ -32,10 +32,9 @@ if(checkName.test(name) == true && checkEmail.test(email) == true && checkPasswo
                             res.status(404).send("Not Found");
                         }else{
                             console.log(result)
-<<<<<<< HEAD
-=======
-                            
->>>>>>> 75b423706714390643eb64bcfb66cdc41bfc4a50
+
+
+                        
                         }
                         let id = result.insertId
                      let tokenSignUp = jwt.sign({id:id,email:email,password:hashedpassword},key)
@@ -48,11 +47,11 @@ if(checkName.test(name) == true && checkEmail.test(email) == true && checkPasswo
                 }
             })
         }else{
-<<<<<<< HEAD
+
             res.status(226).send({status:"your Email is Exists"});
-=======
+
             res.status(226).send({states:"your Email is Exists"});
->>>>>>> 75b423706714390643eb64bcfb66cdc41bfc4a50
+
         }
     })
 }else{
