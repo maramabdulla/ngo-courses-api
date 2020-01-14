@@ -3,7 +3,7 @@ const
     bcrypt = require("../database/hash"),
     jwt = require("jsonwebtoken"),
     router = express.Router(),
-    {checkNgoEmailExists,addNgoAccount,checkPasswordDB,showNameWithLogIn} = require('../ngo/NgoRepository'),
+    {checkTraineeEmailExists,addTraineeAccount,checkPasswordDB,showNameWithLogIn} = require('../traineeRepo/TraineeRepository'),
     routeBase = '/ngo'
 ;
 //.....................................
@@ -12,23 +12,27 @@ router.post(routeBase + '/register', (req, res) => {
     let name=req.body.name;
     let email=req.body.email;
     let password=req.body.password;
+    let adrees = req.body.adress;
+    let phone = req.body.phone;
     const checkName = /^[a-z]|[0-9]/i;
     const checkEmail = /[a-z0-9_\.\-]+@+[a-z_\.\-]+\.+[a-z]/i;
     const checkPassword = /[a-z]+|[0-9]+|\!+|\@+|\#+|\$+|\%+|\&/i;
-if(checkName.test(name) == true && checkEmail.test(email) == true && checkPassword.test(password) == true) {
-    checkNgoEmailExists(email, (EmailDidNotExisit, EmailExisted) => {
+    const checkAdress = /[0-9]|[a-z]/i;
+    const checkPhone = /[0-9]/;
+if(checkName.test(name) == true && checkEmail.test(email) == true &&
+ checkPassword.test(password) == true && checkAdress.test(adrees) == true && checkPhone.test(phone)==true) {
+    checkTraineeEmailExists(email, (EmailDidNotExisit, EmailExisted) => {
         if(EmailExisted==0){
             bcrypt.hashPassword(password,8,(HashingDidNotWork,HashingPasswordWorked)=>{
                 if(HashingDidNotWork){
                     res.status(500);
                 }else{
-                    addNgoAccount(name,email,HashingPasswordWorked,(addNgoAccountFiled,addNgoAccountSuccessed)=>{
+                    addTraineeAccount(name,email,HashingPasswordWorked,adrees,phone,(addNgoAccountFiled,addNgoAccountSuccessed)=>{
                         if(addNgoAccountFiled){
                             res.status(500);
                         }else{   
                             let id = addNgoAccountSuccessed.insertId
-                            let tokenSignUp = jwt.sign({id:id,email:email,password:HashingPasswordWorked},key)
-                            console.log(tokenSignUp)
+                            let tokenSignUp = jwt.sign({id:id,email:email,password:HashingPasswordWorked,address:adrees,phone:phone},key)
                            res.status(201).send({id:id,token:tokenSignUp}); 
                         }
                        
@@ -53,10 +57,10 @@ checkPasswordDB(email,(err,FindPasswordByEmail)=>{
         bcrypt.comparePassword(password,FindPasswordByEmail[0].password,(err,CompareDone)=>{
             if(CompareDone == true){ 
                 showNameWithLogIn(email , (error , NameUser)=>{
-                    let id = NameUser[0].id
+         
                     let passwordToken = NameUser[0].password
-                    let tokenLogIn = jwt.sign({id:id , email:email , password:passwordToken},key)
-                res.send({status:200, token:tokenLogIn,id:id})
+                    let tokenLogIn = jwt.sign({email:email , password:passwordToken},key)
+                res.send({status:200, token:tokenLogIn})
             })
             }else{
                 res.send({status:400})
@@ -68,13 +72,5 @@ checkPasswordDB(email,(err,FindPasswordByEmail)=>{
 })
 })
 
-
-// router.get(routeBase, (req, res) => {
-//     res.send('success');
-// });
-
-// router.put(routeBase, (req, res) => {
-
-// });
 
 module.exports = router;
