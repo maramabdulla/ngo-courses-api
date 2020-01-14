@@ -14,7 +14,11 @@ router.post(routeBase + '/register', (req, res) => {
     let password=req.body.password;
     const checkName = /^[a-z]|[0-9]/i;
     const checkEmail = /[a-z0-9_\.\-]+@+[a-z_\.\-]+\.+[a-z]/i;
+<<<<<<< HEAD
     const checkPassword = /[a-z]+|[0-9]+|\!+|\@+|\#+|\$+|\%+|\&/i;
+=======
+const checkPassword  = /[a-z]+|[0-9]+|\!+|\@+|\#+|\$+|\%+|\&/i;
+>>>>>>> 1b2b839ceef08c44a6c222d5969bb79b442c1902
 if(checkName.test(name) == true && checkEmail.test(email) == true && checkPassword.test(password) == true) {
     checkNgoEmailExists(email, (EmailDidNotExisit, EmailExisted) => {
         if(EmailExisted==0){
@@ -22,6 +26,17 @@ if(checkName.test(name) == true && checkEmail.test(email) == true && checkPasswo
                 if(HashingDidNotWork){
                     res.status(500);
                 }else{
+<<<<<<< HEAD
+=======
+
+                    addNgoAccount(name,email,hashedpassword,(err,result)=>{
+                        console.log(email)
+                        console.log(result)
+                        if(err){
+                            res.status(404).send("Not Found");
+                        }else{
+                            console.log(result)
+>>>>>>> 1b2b839ceef08c44a6c222d5969bb79b442c1902
                     addNgoAccount(name,email,HashingPasswordWorked,(addNgoAccountFiled,addNgoAccountSuccessed)=>{
                         if(addNgoAccountFiled){
                             res.status(500);
@@ -29,13 +44,28 @@ if(checkName.test(name) == true && checkEmail.test(email) == true && checkPasswo
                             let id = addNgoAccountSuccessed.insertId
                             let tokenSignUp = jwt.sign({id:id,email:email,password:HashingPasswordWorked},key)
                            res.status(201).send({id:id,token:tokenSignUp}); 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 1b2b839ceef08c44a6c222d5969bb79b442c1902
                         }
                        
                     });
                 }
             })
         }else{
+<<<<<<< HEAD
             res.status(226);
+=======
+
+            res.status(226).send({status:"your Email is Exists"});
+
+            res.status(226).send({states:"your Email is Exists"});
+
+
+            res.send({status:226})
+
+>>>>>>> 1b2b839ceef08c44a6c222d5969bb79b442c1902
         }
     })
 }else{
