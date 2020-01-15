@@ -12,6 +12,7 @@ app.use(express.json({limit:'50mb'}));
 app.use(bodyParser.json());
 app.use(ngo);
 app.use(trainers);
+app.use('/imeges/trainers', express.static(__dirname + '/imeges/trainers'));
 // app.use(courses);
 app.listen(port, () => {
     console.log(`server is listening on port ${port}`);
