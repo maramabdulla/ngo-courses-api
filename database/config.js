@@ -5,8 +5,8 @@ function createDatabaseConnection(callback) {
     const connection = mysql.createConnection({
         host: 'localhost',
         user: 'root',
-        password: '12345',
-        database: DB_NAME
+        password: '12345678',
+        database: DB_NAME,
     });
 
     connection.connect(error => {

@@ -1,8 +1,7 @@
 const {createDatabaseConnection, DB_NAME} = require('../database/config');
 
-
-function checkNgoEmailExists(email, callback) {
-    const sql = `SELECT COUNT(*) as count from ${DB_NAME}.ngos WHERE email = "${email}"`;
+function checkTraineeEmailExists(email, callback) {
+    const sql = `SELECT COUNT(*) as count from ${DB_NAME}.trainee WHERE email = "${email}"`;
     createDatabaseConnection((connectError, connection) => {
         if (connectError) {
             callback(connectError, null);
@@ -17,34 +16,32 @@ function checkNgoEmailExists(email, callback) {
         }
     });
 }
-
-function addNgoAccount(name,email,password,callback){
-const sql="INSERT INTO `ngos_courses`.`ngos` (`name`, `email`,`password`) VALUES"+`('${name}', '${email}', '${password}');`
+function addTraineeAccount(name,email,password,adrees,phone,callback){
+const sql="INSERT INTO `ngos_courses`.`trainee` (`name`, `email`, `password`, `address`, `phone`) VALUES"+`('${name}', '${email}', '${password}', '${adrees}', '${phone}');`
 createDatabaseConnection((connectError, connection) => {
     if (connectError) {
         callback(connectError, null);
     } else {
         connection.query(sql, (error, result) => {
-            
+         
                 callback(error,result);
-        
+
             connection.end();
         });
     }
 });
-
 }
 
 function checkPasswordDB(email , callback) {
-    const sql = "select password from `ngos_courses`.`ngos` where email ="+`'${email}'`
+    const sql = "select password from `ngos_courses`.`trainee` where email ="+`'${email}'`
     createDatabaseConnection((connectError, connection) => {
         if (connectError) {
             callback(connectError, null);
         } else {
             connection.query(sql, (error, result) => {
-                
+             
                     callback(error,result);
-            
+    
                 connection.end();
             });
         }
@@ -52,15 +49,15 @@ function checkPasswordDB(email , callback) {
 }
 
 function showNameWithLogIn(email , callback){
-    const sql = "select name,id, password from `ngos_courses`.`ngos` where email ="+`'${email}'`
+    const sql = "select name,id, password from `ngos_courses`.`trainee` where email ="+`'${email}'`
     createDatabaseConnection((connectError, connection) => {
         if (connectError) {
             callback(connectError, null);
         } else {
             connection.query(sql, (error, result) => {
-                
+             
                     callback(error,result);
-            
+
                 connection.end();
             });
         }
@@ -68,5 +65,5 @@ function showNameWithLogIn(email , callback){
 }
 
 module.exports = {
-    checkNgoEmailExists,addNgoAccount,checkPasswordDB,showNameWithLogIn
+    checkTraineeEmailExists,addTraineeAccount,checkPasswordDB,showNameWithLogIn
 };

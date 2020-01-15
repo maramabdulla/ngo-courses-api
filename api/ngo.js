@@ -45,27 +45,27 @@ if(checkName.test(name) == true && checkEmail.test(email) == true && checkPasswo
 });
 //...........................
 router.post(routeBase + '/login', (req, res) => {
-let email = req.body.email;
-let password = req.body.password;
-checkPasswordDB(email,(err,FindPasswordByEmail)=>{
-    if(FindPasswordByEmail.length>0){
-        bcrypt.comparePassword(password,FindPasswordByEmail[0].password,(err,CompareDone)=>{
-            if(CompareDone == true){ 
-                showNameWithLogIn(email , (error , NameUser)=>{
-                    let id = NameUser[0].id
-                    let passwordToken = NameUser[0].password
-                    let tokenLogIn = jwt.sign({id:id , email:email , password:passwordToken},key)
-                res.send({status:200, token:tokenLogIn,id:id})
-            })
-            }else{
-                res.send({status:400})
-            }
+    let email = req.body.email;
+    let password = req.body.password;
+    checkPasswordDB(email,(err,FindPasswordByEmail)=>{
+        if(FindPasswordByEmail.length>0){
+            bcrypt.comparePassword(password,FindPasswordByEmail[0].password,(err,CompareDone)=>{
+                if(CompareDone == true){ 
+                    showNameWithLogIn(email , (error , NameUser)=>{
+             
+                        let passwordToken = NameUser[0].password
+                        let tokenLogIn = jwt.sign({email:email , password:passwordToken},key)
+                    res.send({status:200, token:tokenLogIn})
+                })
+                }else{
+                    res.send({status:400})
+                }
+        })
+        }else{
+            res.send({status:404})
+        }
     })
-    }else{
-        res.send({status:404})
-    }
-})
-})
+    })
 
 
 // router.get(routeBase, (req, res) => {
