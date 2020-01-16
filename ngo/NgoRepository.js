@@ -12,7 +12,7 @@ function checkNgoEmailExists(email, callback) {
                     callback(error,result[0].count>0);
                 }
         
-                connection.end();
+                // connection.end();
             });
         }
     });
@@ -28,7 +28,7 @@ createDatabaseConnection((connectError, connection) => {
             
                 callback(error,result);
         
-            connection.end();
+            // connection.end();
         });
     }
 });
@@ -45,7 +45,7 @@ function checkPasswordDB(email , callback) {
                 
                     callback(error,result);
             
-                connection.end();
+                // connection.end();
             });
         }
     });
@@ -61,7 +61,7 @@ function showNameWithLogIn(email , callback){
                 
                     callback(error,result);
             
-                connection.end();
+                // connection.end();
             });
         }
     });

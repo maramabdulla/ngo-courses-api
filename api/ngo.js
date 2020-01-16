@@ -12,6 +12,7 @@ router.post(routeBase + '/register', (req, res) => {
     let name=req.body.name;
     let email=req.body.email;
     let password=req.body.password;
+    console.log(name , email , password)
     const checkName = /^[a-z]|[0-9]/i;
     const checkEmail = /[a-z0-9_\.\-]+@+[a-z_\.\-]+\.+[a-z]/i;
     const checkPassword = /[a-z]+|[0-9]+|\!+|\@+|\#+|\$+|\%+|\&/i;
@@ -23,7 +24,9 @@ if(checkName.test(name) == true && checkEmail.test(email) == true && checkPasswo
                     res.status(500);
                 }else{
                     addNgoAccount(name,email,HashingPasswordWorked,(addNgoAccountFiled,addNgoAccountSuccessed)=>{
+                        console.log(addNgoAccountSuccessed)
                         if(addNgoAccountFiled){
+                            console.log(addNgoAccountFiled)
                             res.status(500);
                         }else{   
                             let id = addNgoAccountSuccessed.insertId

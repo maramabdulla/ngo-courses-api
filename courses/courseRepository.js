@@ -9,7 +9,7 @@ function AddNewCourses(title,dateBegin,dateEnd,locations,range_weight,desc,trine
         } else {
             connection.query(sql, (error, result) => {
                 if (callback) {
-                    callback(error,result[0].count>0);
+                    callback(error,SpeechRecognitionResult);
                 }
         
                 connection.end();
@@ -27,7 +27,7 @@ function getAllCourses(callback){
         } else {
             connection.query(sql, (error, result) => {
                 if (callback) {
-                    callback(error,result[0].count>0);
+                    callback(error,result);
                 }
         
                 connection.end();
@@ -44,7 +44,7 @@ function deleteCourse(id , callback){
         } else {
             connection.query(sql, (error, result) => {
                 if (callback) {
-                    callback(error,result[0].count>0);
+                    callback(error,result);
                 }
         
                 connection.end();
@@ -53,7 +53,23 @@ function deleteCourse(id , callback){
     });
 }
 
+function InsertCT(id_course , id_traines , callback) {
+const sql = `INSERT INTO ngos_courses.courses_traines (id_course,id_traines) VALUES ('${id_course}', '${id_traines}')`;
+createDatabaseConnection((connectError, connection) => {
+    if (connectError) {
+        callback(connectError, null);
+    } else {
+        connection.query(sql, (error, result) => {
+            if (callback) {
+                callback(error,result);
+            }
+            connection.end();
+        });
+    }
+});
+}
+
 module.exports = {
-    AddNewCourses,getAllCourses,deleteCourse
+    AddNewCourses,getAllCourses,deleteCourse,InsertCT
 };
 // ${trinername}
