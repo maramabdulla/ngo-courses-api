@@ -23,7 +23,9 @@ if(checkName.test(name) == true && checkEmail.test(email) == true && checkPasswo
                     res.status(500);
                 }else{
                     addNgoAccount(name,email,HashingPasswordWorked,(addNgoAccountFiled,addNgoAccountSuccessed)=>{
+                        console.log(addNgoAccountSuccessed)
                         if(addNgoAccountFiled){
+                            console.log(addNgoAccountFiled)
                             res.status(500);
                         }else{   
                             let id = addNgoAccountSuccessed.insertId
@@ -67,13 +69,31 @@ router.post(routeBase + '/login', (req, res) => {
     })
     })
 
-
-// router.get(routeBase, (req, res) => {
-//     res.send('success');
-// });
-
-// router.put(routeBase, (req, res) => {
-
-// });
+// put ngo
+    // router.post(routeBase, (req, res) => {
+    //     // let token = req.headers.
+    //     let new_name = req.body.name;
+    //     let new_bio = req.body.bio;
+    //     let new_website = req.body.name;
+    //     let new_logo = req.body.name;
+    //     let token = req.headers.authorization.split(" ")[0]
+    //     jwt.verify(token, key, (err, result) => {
+    //         if (err) {
+    //             res.sendStatus(404)
+    //         } else {
+    //             let id  =result.id;
+    //             UpdateNgo(id,new_name,new_logo,new_website,new_bio,i=>{
+    //             if(i){
+    //                 res.sendStatus(201)
+    //             }else{
+    //                 res.sendStatus(400)
+    
+    //             }
+    
+    //             })
+    
+    //         }
+    //     })
+    // });
 
 module.exports = router;
