@@ -3,7 +3,7 @@ const
     bcrypt = require("../database/hash"),
     jwt = require("jsonwebtoken"),
     router = express.Router(),
-    {checkTraineeEmailExists,getAllTrainee,addTraineeAccount,checkPasswordDB,showNameWithLogIn,UpdatePasswordTrainee,LogOutTrainee} = require('../traineeRepo/TraineeRepository'),
+    {checkTraineeEmailExists,getAllTrainee,addTraineeAccount,checkPasswordDB,showNameWithLogIn,UpdatePasswordTrainee} = require('../traineeRepo/TraineeRepository'),
     routeBase = '/trainee'
 ;
 //.....................................
@@ -123,25 +123,5 @@ router.get(routeBase + '/getTrainee/page/:page' ,(req , res)=>{
         }
     })
 })
-// 
 
-
-
-// router.delete( routeBase +'/deleteTrainee',(req , res)=>{
-// let token = req.headers.authorization.split(" ")[0];
-// console.log(token)
-// jwt.verify(token, key, (TokenIndefind, InfoByToken) => {
-//     if (TokenIndefind) {
-//         res.send({status:404})
-//     }
-//     let id = InfoByToken.id;
-//     LogOutTrainee(id , (FiledLogOut , LogOutSuccssed)=>{
-//         if(FiledLogOut) {
-//             res.send({status : 500})
-//         }else{
-//             res.send({status : 200 , LogOut:LogOutSuccssed})
-//         }
-//     })
-// })
-// })
 module.exports = router;

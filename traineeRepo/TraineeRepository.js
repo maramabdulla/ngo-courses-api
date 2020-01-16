@@ -81,21 +81,6 @@ function UpdatePasswordTrainee(id , newPassword , callback){
     });
 }
 
-function LogOutTrainee(id , callback) {
-const sql = `DELETE FROM ${DB_NAME}.trainee WHERE (id = '${id}')`;
-createDatabaseConnection((connectError, connection) => {
-    if (connectError) {
-        callback(connectError, null);
-    } else {
-        connection.query(sql, (error, result) => {
-         
-                callback(error,result);
-
-            connection.end();
-        });
-    }
-});
-}
 
 function getAllTrainee(callback) {
 const sql = `select id,name,address,phone,email from ngos_courses.trainee`
@@ -115,7 +100,7 @@ createDatabaseConnection((connectError, connection) => {
 
 
 module.exports = {
-    checkTraineeEmailExists,addTraineeAccount,checkPasswordDB,showNameWithLogIn,UpdatePasswordTrainee,LogOutTrainee,
+    checkTraineeEmailExists,addTraineeAccount,checkPasswordDB,showNameWithLogIn,UpdatePasswordTrainee,
     getAllTrainee
 
 
