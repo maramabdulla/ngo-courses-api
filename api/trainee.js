@@ -109,7 +109,7 @@ router.put(routeBase + '/EditeTrainee', (req, res) => {
 });
 
 
-let pagesize = 3;
+let pagesize = 9;
 router.get(routeBase + '/getTrainee/page/:page' ,(req , res)=>{
     let page = req.params.page;
     let start = (page-1)*pagesize;

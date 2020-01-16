@@ -1,0 +1,8 @@
+POST http://localhost:3000/ngo/register
+Content-Type: application/json
+
+{
+    "name" : "رضوان",
+"email" : "a@awe.aa",
+"password" : "0000000000"
+}
