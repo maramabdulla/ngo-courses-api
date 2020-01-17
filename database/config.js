@@ -1,5 +1,5 @@
 const mysql = require('mysql');
-const DB_NAME = 'ngos_courses';
+const DB_NAME = 'ngo_courses';
 
 function createDatabaseConnection(callback) {
     const connection = mysql.createConnection({

@@ -5,7 +5,7 @@ const
     ngo = require('./api/ngo'),
     trainee = require('./api/trainee'),
     port = 3000,
-    // trainers = require('./api/trainer'),
+    trainers = require('./api/trainer'),
     courses = require('./api/course')
 ;
 
