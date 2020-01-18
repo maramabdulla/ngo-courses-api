@@ -1,7 +1,7 @@
 const
 
     express = require("express"),
-    {getOnetrainer,addtrainers,getALLtrainer,deleteTrainer} = require('../TrainerRepo/trainersRepo.js'),
+    {getOnetrainer,addtrainers,getALLtrainer,deleteTrainer,edittrainers} = require('../TrainerRepo/trainersRepo.js'),
     router = express.Router(),  
     routeBase = '/trainer',
     fs = require('fs')
@@ -27,7 +27,7 @@ router.post( routeBase , ( req , res ) =>{
 ;
 
     fs.writeFile(fullPath, base64Image, {encoding: 'base64'}, function(err) {
-        console.log(fullPath);
+        console.log(process.cwd());
     });
 
     addtrainers(trainerName,imgpath,trainerEmail,trainerNumber,traineraddress,trainerbio,(AddNewCoursesFailed , AddNewtrainerSuccssed)=>{
@@ -44,6 +44,7 @@ router.get(routeBase,(req,res)=>{
 
   getALLtrainer((getAlltrainersFaild , getAlltrainerssuccssed)=>{
 
+    
     res.send(getAlltrainerssuccssed)
   })
 });
@@ -66,5 +67,35 @@ router.get(routeBase,(req,res)=>{
     })    
   });
 
+
+
+  router.put( routeBase + '/:id' , ( req , res ) =>{
+
+    let     id=req.params.id;
+
+    let trainerName = req.body.name;
+    let trainerEmail = req.body.email;
+    let trainerNumber = req.body.num;
+    let traineraddress = req.body.address;
+    let trainerphoto = req.body.photo; 
+    let trainerbio = req.body.bio;
+    let base64Image = trainerphoto.split(';base64,').pop();
+    const
+    imgpath = "/imeges/trainers/"+trainerEmail+trainerNumber+".png",
+    fullPath = process.cwd() + imgpath
+
+;
+
+    fs.writeFile(fullPath, base64Image, {encoding: 'base64'}, function(err) {
+        console.log(fullPath);
+    });
+
+    edittrainers(trainerName,imgpath,trainerEmail,trainerNumber,traineraddress,trainerbio,id ,(AddNewCoursesFailed , AddNewtrainerSuccssed)=>{
+console.log(AddNewtrainerSuccssed);
+      res.send(AddNewtrainerSuccssed);
+
+    })
+    
+} );
 
 module.exports = router;
