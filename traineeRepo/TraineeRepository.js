@@ -16,8 +16,8 @@ function checkTraineeEmailExists(email, callback) {
         }
     });
 }
-function addTraineeAccount(name,email,password,adrees,phone,callback){
-const sql="INSERT INTO `ngos_courses`.`trainee` (`name`, `email`, `password`, `address`, `phone`) VALUES"+`('${name}', '${email}', '${password}', '${adrees}', '${phone}');`
+function addTraineeAccount(name,email,password,address,phone,callback){
+const sql="INSERT INTO `ngos_courses`.`trainee` (`name`, `email`, `password`, `address`, `phone`) VALUES"+`('${name}', '${email}', '${password}', '${address}', '${phone}');`
 createDatabaseConnection((connectError, connection) => {
     if (connectError) {
         callback(connectError, null);
@@ -64,6 +64,44 @@ function showNameWithLogIn(email , callback){
     });
 }
 
+
+function UpdatePasswordTrainee(id , newPassword , callback){
+    const sql = `UPDATE ${DB_NAME}.trainee SET password = '${newPassword}' WHERE (id = '${id}')`;
+    createDatabaseConnection((connectError, connection) => {
+        if (connectError) {
+            callback(connectError, null);
+        } else {
+            connection.query(sql, (error, result) => {
+             
+                    callback(error,result);
+
+                connection.end();
+            });
+        }
+    });
+}
+
+
+function getAllTrainee(callback) {
+const sql = `select id,name,address,phone,email from ngos_courses.trainee`
+createDatabaseConnection((connectError, connection) => {
+    if (connectError) {
+        callback(connectError, null);
+    } else {
+        connection.query(sql, (error, result) => {
+         
+                callback(error,result);
+
+            connection.end();
+        });
+    }
+});
+}
+
+
 module.exports = {
-    checkTraineeEmailExists,addTraineeAccount,checkPasswordDB,showNameWithLogIn
+    checkTraineeEmailExists,addTraineeAccount,checkPasswordDB,showNameWithLogIn,UpdatePasswordTrainee,
+    getAllTrainee
+
+
 };
