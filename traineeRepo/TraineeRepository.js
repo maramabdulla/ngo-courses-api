@@ -82,6 +82,23 @@ function UpdatePasswordTrainee(id , newPassword , callback){
 }
 
 
+function UpdateInformationTrainee(id , name , phone , address , callback){
+    const sql = `UPDATE ${DB_NAME}.trainee SET name = '${name}', 
+      address = '${address}', phone = '${phone}' WHERE (id = '${id}')`
+    createDatabaseConnection((connectError, connection) => {
+        if (connectError) {
+            callback(connectError, null);
+        } else {
+            connection.query(sql, (error, result) => {
+             
+                    callback(error,result);
+
+                connection.end();
+            });
+        }
+    });
+}
+
 function getAllTrainee(callback) {
 const sql = `select id,name,address,phone,email from ngos_courses.trainee`
 createDatabaseConnection((connectError, connection) => {
@@ -101,7 +118,7 @@ createDatabaseConnection((connectError, connection) => {
 
 module.exports = {
     checkTraineeEmailExists,addTraineeAccount,checkPasswordDB,showNameWithLogIn,UpdatePasswordTrainee,
-    getAllTrainee
+    getAllTrainee,UpdateInformationTrainee
 
 
 };
