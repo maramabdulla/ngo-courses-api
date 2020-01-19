@@ -1,84 +1,116 @@
-// const {createDatabaseConnection, DB_NAME} = require('../database/config');
+const
+    express = require("express"),
+    {AddNewCourses,getAllCourses,deleteCourse,getTrainerName,updataInfromationCOurses,getOneCourse, SearchCourse,getAllCoursesNgo,registerTrainee,UNRegisterTrainee,GetRegisteredTrainees} = require('../coursesRep/courseRepository.js'),
+    router = express.Router(),
+    // bodyParser = require('body-parser'),
+    routeBase = '/courses'
+;
+let pagesize=20;
+  router.get(routeBase , (req, res) => {
+    const page=req.query.page;
+     start=(page-1)*pagesize;
+     end=start+ pagesize;
+    getAllCourses((getAllCoursesFaild , getAllCoursessuccssed)=>{
+      // console.log(getAllCoursesFaild );
+      // console.log(getAllCoursessuccssed);
+      res.send(getAllCoursessuccssed.slice(start,end))
+    })    
+  });
 
-// const
-//     express = require("express"),
-//     router = express.Router(),
-//     mysql = require('mysql'),
-//     bodyParser = require('body-parser'),
-//     routeBase = '/courses'
-// ;
-// /*const connection = mysql.createConnection({
-//     host: 'localhost',
-//     user: 'root',
-//     password: '12345',
-//     database: 'ngos_courses'
-//   });*/
-//   connection.connect(function(err){
-//     if(err) throw err;
-//   console.log("ok");  
-//   });
-//   router.get(routeBase, (req, res) => {
-//     connection.query('SELECT * FROM ngos_courses.courses',(err , rows, fields)=>{
-//       console.log(rows)
-//       res.send(rows);
-//           });     
-//   });
-
-//   router.delete(routeBase + '/:id', (req, res) => {
-//      let id=req.body.id;
-//       connection.query('DELETE FROM ngos_courses.courses WHERE id='+id+' ',(err , rows, fields)=>{
-//         console.log(id)
-//         res.send(rows);
-  
-//             }); 
-//     });
-
-    router.post( routeBase ,(req,res)=>{
-        let title        = req.body.title;
-        let date         = req.body.dates;
-        let dateEnd      = req.body.dateEnd;
-        let locations    = req.body.location;
-        let range_weight = req.body.number_of_seats;
-        let remain       = req.body.remain;
-        let des          = req.body.desctiption;
-    let sql=' INSERT INTO `ngos_courses`.`courses` (`title`,`dates`,`dateEnd`,`location`,`number_of_seats`,`remainSeats`,`description`) VALUES ('+ `'${title}'`+","+`'${date}'`+","+`'${dateEnd}'`+","+`'${locations}'`+","+`'${range_weight}'`+","+`'${remain}'`+","+`'${desc}'`+')';
-        connection.query(sql,(err,result)=>{
-            console.log(err);
-            console.log(result.insertId);
-            res.send(result);
-        })
+  router.get('/trainer',(req,res)=>{
+    getTrainerName((gettranierfaild,gettrainersessucssed)=>{
+      res.send(gettrainersessucssed);
     })
-//     router.post( routeBase ,(req,res)=>{
-//         let title = req.body.title;
-//         let date=req.body.dates;
-//       let dateEnd=req.body.dateEnd;
-//         let locations=req.body.location;
-//         let range_weight=req.body.number_of_seats;
-//         let remain=req.body.remain;
-//         let desc=req.body.desctiption;
-//     let sql=' INSERT INTO `ngos_courses`.`courses` (`title`,`dates`,`dateEnd`,`location`,`number_of_seats`,`remainSeats`,`description`) VALUES ('+ `'${title}'`+","+`'${date}'`+","+`'${dateEnd}'`+","+`'${locations}'`+","+`'${range_weight}'`+","+`'${remain}'`+","+`'${desc}'`+')';
-//         connection.query(sql,(err,result)=>{
-//             console.log(err);
-//             console.log(result.insertId);
-//             res.send(result);
-//         })
-//     })
+   
+  });
+  router.delete(routeBase , (req, res) => {
+    let id=req.body.id;
+    deleteCourse(id ,(erroeDelete,ssuccssedDelete)=>{
+      res.send(ssuccssedDelete);
+    });
+  })
+    router.post( routeBase ,(req,res)=>{
+        let title = req.body.title;
+        let dateBegin=req.body.date_begin;
+      let dateEnd=req.body.date_end;
+        let locations=req.body.location;
+        let range_weight=req.body.number_of_seats;
+        let desc=req.body.desctiption;
+        let  trainerName=req.body.req.body;
+    // let trainer=req.body.trainer;
+    const setOfNumder = /[0-9]/;
+    const checkName = /^[a-z]|[0-9]/i;
+    var dateformat =/^(0?[1-9]|1[012])[\/\-](0?[1-9]|[12][0-9]|3[01])[\/\-]\d{4}$/;
+    if(checkName.test(title) == true && dateformat.test(dateBegin) == true  && dateformat.test(dateEnd) == true && setOfNumder.test(range_weight) == true )
+    {
+      AddNewCourses(title , dateBegin , dateEnd , locations , range_weight , desc ,trainerName,(AddNewCoursesFailed , AddNewCoursesSuccssed)=>{
+        console.log(AddNewCoursesFailed);
+        console.log(AddNewCoursesSuccssed);
+        res.send(AddNewCoursesSuccssed);
+      })    
+      }
+        else{
+          res.send({status:500});
+        }
 
 
-//     // app.put('/courses:id',(req,res)=>{
-//     //     let id=req.params.id;
-//     //     let title = req.body.title;
-//     //       let date=req.body.dates;
-//     //     let dateEnd=req.body.dateEnd;
-//     //       let locations=req.body.location;
-//     //       let range_weight=req.body.number_of_seats;
-//     //       let remain=req.body.remain;
-//     //       let desc=req.body.desctiption;
-//     //   let sql=' INSERT INTO `ngo_courses`.`courses` (`title`,`dates`,`dateEnd`,`location`,`number_of_seats`,`remainSeats`,`description`) VALUES ('+ `'${title}'`+","+`'${date}'`+","+`'${dateEnd}'`+","+`'${locations}'`+","+`'${range_weight}'`+","+`'${remain}'`+","+`'${desc}'`+')';
-//     //       connection.query(sql,(err,result)=>{
-//     //           console.log(err);
-//     //           console.log(result.insertId);
-//     //           res.send(result);
-//     //       })
-//     //   })
-//     module.exports = router;
+      })
+      
+      router.put(routeBase + '/:id' ,(req,res)=>{
+        let id=req.params.id;
+        let title = req.body.title;
+        let dateBegin=req.body.date_begin;
+      let dateEnd=req.body.date_end;
+        let locations=req.body.location;
+        let range_weight=req.body.number_of_seats;
+        let desc=req.body.desctiption;
+    let trainer=req.body.trinername;
+         updataInfromationCOurses(id,title, dateBegin, dateEnd, locations, range_weight, desc,trainer,(errupdata,scusccedupdata)=>{
+        res.send(scusccedupdata)
+      })
+      
+    })
+      router.get(routeBase + '/:id', (req, res) => {
+    id=req.params.id;
+    getOneCourse(id,(getOneCoursesFaild , getOneCoursessuccssed)=>{
+      // console.log(getOneCoursesFaild );
+      // console.log(getOneCoursessuccssed);
+      res.send(getOneCoursessuccssed)
+    })    
+  });
+  router.get(routeBase , (req, res) => {
+    let title=req.query.title;
+    // console.log(req.query);
+     SearchCourse(title,(erroeDelete,ssuccssedSearch)=>{
+       res.send(ssuccssedSearch);
+     });
+   })
+   router.get(routeBase+'/ngos/:id_ngo' , (req, res) => {
+    let id_ngo=req.params.id_ngo;
+    // let id_ngo=req.query.id_ngo;
+    getAllCoursesNgo((getAllCoursesByNgoFaild, getAllCoursesByNgosuccssed)=>{
+      // console.log(getAllCoursesByNgoFaild );
+      // console.log(getAllCoursesByNgosuccssed);
+      res.send(getAllCoursesByNgosuccssed)
+    })    
+  });
+  router.get(routeBase +'/trainee',(req, res) =>{
+    GetRegisteredTrainees((GetRegisteredTraineesFaild,GetRegisteredTraineesSsuccssed)=>{
+      res.send(GetRegisteredTraineesSsuccssed)
+    })
+  })
+  router.get(routeBase+'/trainee/:id_course' , (req, res) =>{
+    let id_course=req.params.id_course;
+    registerTrainee(id_course,(registerTraineeFaild,registerTraineessuccssed)=>{
+      res.send(registerTraineessuccssed);
+    })
+  });
+  router.delete(routeBase+'/trainee/:id_trainee' , (req, res) =>{
+    let id_trainee=req.params.id_trainee;
+    UNRegisterTrainee(id_trainee,(UNregisterTraineeFaild,UNregisterTraineessuccssed)=>{
+      res.send(UNregisterTraineessuccssed);
+    })
+  });
+
+  //SELECT * FROM ngos_courses.courses_trainee  WHERE NOT(ngos_courses.courses.id=ngos_courses.courses_trainee.id_course)
+    module.exports = router;

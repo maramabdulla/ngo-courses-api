@@ -14,11 +14,7 @@ router.post(routeBase + '/register', (req, res) => {
     let password=req.body.password;
     const checkName = /^[a-z]|[0-9]/i;
     const checkEmail = /[a-z0-9_\.\-]+@+[a-z_\.\-]+\.+[a-z]/i;
-<<<<<<< HEAD
     const checkPassword = /[a-z]+|[0-9]+|\!+|\@+|\#+|\$+|\%+|\&/i;
-=======
-const checkPassword  = /[a-z]+|[0-9]+|\!+|\@+|\#+|\$+|\%+|\&/i;
->>>>>>> 1b2b839ceef08c44a6c222d5969bb79b442c1902
 if(checkName.test(name) == true && checkEmail.test(email) == true && checkPassword.test(password) == true) {
     checkNgoEmailExists(email, (EmailDidNotExisit, EmailExisted) => {
         if(EmailExisted==0){
@@ -26,17 +22,6 @@ if(checkName.test(name) == true && checkEmail.test(email) == true && checkPasswo
                 if(HashingDidNotWork){
                     res.status(500);
                 }else{
-<<<<<<< HEAD
-=======
-
-                    addNgoAccount(name,email,hashedpassword,(err,result)=>{
-                        console.log(email)
-                        console.log(result)
-                        if(err){
-                            res.status(404).send("Not Found");
-                        }else{
-                            console.log(result)
->>>>>>> 1b2b839ceef08c44a6c222d5969bb79b442c1902
                     addNgoAccount(name,email,HashingPasswordWorked,(addNgoAccountFiled,addNgoAccountSuccessed)=>{
                         if(addNgoAccountFiled){
                             res.status(500);
@@ -44,28 +29,13 @@ if(checkName.test(name) == true && checkEmail.test(email) == true && checkPasswo
                             let id = addNgoAccountSuccessed.insertId
                             let tokenSignUp = jwt.sign({id:id,email:email,password:HashingPasswordWorked},key)
                            res.status(201).send({id:id,token:tokenSignUp}); 
-<<<<<<< HEAD
-=======
-
->>>>>>> 1b2b839ceef08c44a6c222d5969bb79b442c1902
                         }
                        
                     });
                 }
             })
         }else{
-<<<<<<< HEAD
-            res.status(226);
-=======
-
-            res.status(226).send({status:"your Email is Exists"});
-
-            res.status(226).send({states:"your Email is Exists"});
-
-
             res.send({status:226})
-
->>>>>>> 1b2b839ceef08c44a6c222d5969bb79b442c1902
         }
     })
 }else{
@@ -75,27 +45,27 @@ if(checkName.test(name) == true && checkEmail.test(email) == true && checkPasswo
 });
 //...........................
 router.post(routeBase + '/login', (req, res) => {
-let email = req.body.email;
-let password = req.body.password;
-checkPasswordDB(email,(err,FindPasswordByEmail)=>{
-    if(FindPasswordByEmail.length>0){
-        bcrypt.comparePassword(password,FindPasswordByEmail[0].password,(err,CompareDone)=>{
-            if(CompareDone == true){ 
-                showNameWithLogIn(email , (error , NameUser)=>{
-                    let id = NameUser[0].id
-                    let passwordToken = NameUser[0].password
-                    let tokenLogIn = jwt.sign({id:id , email:email , password:passwordToken},key)
-                res.status(200).send({token:tokenLogIn,id:id})
-            })
-            }else{
-                res.status(400).send({passWrong:"your password wrong or doesn't Exist"})
-            }
+    let email = req.body.email;
+    let password = req.body.password;
+    checkPasswordDB(email,(err,FindPasswordByEmail)=>{
+        if(FindPasswordByEmail.length>0){
+            bcrypt.comparePassword(password,FindPasswordByEmail[0].password,(err,CompareDone)=>{
+                if(CompareDone == true){ 
+                    showNameWithLogIn(email , (error , NameUser)=>{
+             
+                        let passwordToken = NameUser[0].password
+                        let tokenLogIn = jwt.sign({email:email , password:passwordToken},key)
+                    res.send({status:200, token:tokenLogIn})
+                })
+                }else{
+                    res.send({status:400})
+                }
+        })
+        }else{
+            res.send({status:404})
+        }
     })
-    }else{
-        res.status(404).send({EmailWrong:"Your Email doesn't Exist"})
-    }
-})
-})
+    })
 
 
 // router.get(routeBase, (req, res) => {
