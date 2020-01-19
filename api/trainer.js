@@ -90,9 +90,9 @@ router.get(routeBase,(req,res)=>{
         console.log(fullPath);
     });
 
-    edittrainers(trainerName,imgpath,trainerEmail,trainerNumber,traineraddress,trainerbio,id ,(AddNewCoursesFailed , AddNewtrainerSuccssed)=>{
-console.log(AddNewtrainerSuccssed);
-      res.send(AddNewtrainerSuccssed);
+    edittrainers(trainerName,imgpath,trainerEmail,trainerNumber,traineraddress,trainerbio,id ,(AddNewCoursesFailed , edittrainerSuccssed)=>{
+console.log(edittrainerSuccssed);
+      res.send(edittrainerSuccssed);
 
     })
     
