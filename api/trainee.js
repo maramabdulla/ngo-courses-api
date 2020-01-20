@@ -3,7 +3,7 @@ const
     bcrypt = require("../database/hash"),
     jwt = require("jsonwebtoken"),
     router = express.Router(),
-    {checkTraineeEmailExists,getAllTrainee,addTraineeAccount,checkPasswordDB,showNameWithLogIn,UpdatePasswordTrainee} = require('../traineeRepo/TraineeRepository'),
+    {checkTraineeEmailExists,getAllTrainee,addTraineeAccount,checkPasswordDB,showNameWithLogIn,UpdatePasswordTrainee,UpdateInformationTrainee} = require('../traineeRepo/TraineeRepository'),
     routeBase = '/trainee'
 ;
 //.....................................
@@ -73,7 +73,7 @@ checkPasswordDB(email,(err,FindPasswordByEmail)=>{
 })
 })
 
-router.put(routeBase + '/EditeTrainee', (req, res) => {
+router.put(routeBase + '/EditePasswordTrainee', (req, res) => {
     let token =  req.headers.authorization.split(" ")[0];
     console.log(token)
     let old_password = req.body.old_password;
@@ -108,6 +108,35 @@ router.put(routeBase + '/EditeTrainee', (req, res) => {
     })
 });
 
+router.put(routeBase + '/EditeInformation' , (req , res)=>{
+    let name = req.body.name;
+    let phone = req.body.phone;
+    let address = req.body.address;
+    let token = req.headers.authorization.split(" ")[0];
+    jwt.verify(token , key , (tokenFiled , resultOfToken)=>{
+        console.log(tokenFiled)
+        console.log(resultOfToken)
+        let id = resultOfToken.id
+        if(tokenFiled) {
+            res.send({status : 400})
+        }else{
+            UpdateInformationTrainee(id , name , phone , address , (EditeFiled , EditeSuccssed)=>{
+                console.log(EditeFiled)
+                if(EditeFiled){
+                    res.send({status:404})
+                }else{
+            let tokenTrainee = jwt.sign({id:id,name:name,phone:phone,address:address},key)
+            res.send({
+                id:id , result:EditeSuccssed , token:tokenTrainee
+            })
+                }
+            })
+        }
+    })
+
+    
+
+})
 
 let pagesize = 9;
 router.get(routeBase + '/getTrainee/page/:page' ,(req , res)=>{
