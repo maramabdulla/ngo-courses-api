@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.18, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: ngos_courses
+-- Host: localhost    Database: ngos_courses
 -- ------------------------------------------------------
 -- Server version	5.7.28-log
 
@@ -24,16 +24,16 @@ DROP TABLE IF EXISTS `courses`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `courses` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `title` varchar(245) DEFAULT NULL,
-  `description` varchar(245) DEFAULT NULL,
-  `dates` varchar(245) DEFAULT NULL,
-  `location` varchar(245) DEFAULT NULL,
-  `trainer` varchar(245) DEFAULT NULL,
-  `number_of_seats` varchar(245) DEFAULT NULL,
-  `id_trainee` int(11) DEFAULT NULL,
+  `title` varchar(245) CHARACTER SET latin1 DEFAULT NULL,
+  `description` varchar(245) CHARACTER SET latin1 DEFAULT NULL,
+  `start_date` varchar(245) CHARACTER SET latin1 DEFAULT NULL,
+  `location` varchar(245) CHARACTER SET latin1 DEFAULT NULL,
+  `trainer` varchar(245) CHARACTER SET latin1 DEFAULT NULL,
+  `number_of_seats` int(11) DEFAULT NULL,
   `id_ngo` int(11) DEFAULT NULL,
+  `end_datel` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -46,27 +46,27 @@ LOCK TABLES `courses` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `courses_traines`
+-- Table structure for table `courses_trainee`
 --
 
-DROP TABLE IF EXISTS `courses_traines`;
+DROP TABLE IF EXISTS `courses_trainee`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `courses_traines` (
+CREATE TABLE `courses_trainee` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_course` int(11) DEFAULT NULL,
-  `id_traines` int(11) DEFAULT NULL,
+  `id_trainee` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `courses_traines`
+-- Dumping data for table `courses_trainee`
 --
 
-LOCK TABLES `courses_traines` WRITE;
-/*!40000 ALTER TABLE `courses_traines` DISABLE KEYS */;
-/*!40000 ALTER TABLE `courses_traines` ENABLE KEYS */;
+LOCK TABLES `courses_trainee` WRITE;
+/*!40000 ALTER TABLE `courses_trainee` DISABLE KEYS */;
+/*!40000 ALTER TABLE `courses_trainee` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -84,7 +84,7 @@ CREATE TABLE `ngos` (
   `website` varchar(245) DEFAULT NULL,
   `password` varchar(245) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -104,14 +104,14 @@ DROP TABLE IF EXISTS `trainee`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `trainee` (
-  `id` int(11) NOT NULL,
-  `name` varchar(245) DEFAULT NULL,
-  `picture` varchar(245) DEFAULT NULL,
-  `email` varchar(245) DEFAULT NULL,
-  `mobile` varchar(245) DEFAULT NULL,
-  `address` varchar(245) DEFAULT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(245) CHARACTER SET latin1 DEFAULT NULL,
+  `picture` varchar(245) CHARACTER SET latin1 DEFAULT NULL,
+  `email` varchar(245) CHARACTER SET latin1 DEFAULT NULL,
+  `mobile` varchar(245) CHARACTER SET latin1 DEFAULT NULL,
+  `address` varchar(245) CHARACTER SET latin1 DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -132,15 +132,14 @@ DROP TABLE IF EXISTS `trainers`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `trainers` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(245) DEFAULT NULL,
-  `picture` varchar(245) DEFAULT NULL,
-  `email` varchar(245) DEFAULT NULL,
-  `mobile` varchar(245) DEFAULT NULL,
-  `address` varchar(245) DEFAULT NULL,
-  `id_course` int(11) DEFAULT NULL,
-  `short_bio` varchar(1000) DEFAULT NULL,
+  `name` varchar(245) CHARACTER SET latin1 DEFAULT NULL,
+  `picture` varchar(245) CHARACTER SET latin1 DEFAULT NULL,
+  `email` varchar(245) CHARACTER SET latin1 DEFAULT NULL,
+  `mobile` varchar(245) CHARACTER SET latin1 DEFAULT NULL,
+  `address` varchar(245) CHARACTER SET latin1 DEFAULT NULL,
+  `short_bio` varchar(1000) CHARACTER SET latin1 DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -149,6 +148,7 @@ CREATE TABLE `trainers` (
 
 LOCK TABLES `trainers` WRITE;
 /*!40000 ALTER TABLE `trainers` DISABLE KEYS */;
+INSERT INTO `trainers` VALUES (17,'14141','14141','14141','14141','14141','124132');
 /*!40000 ALTER TABLE `trainers` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -161,4 +161,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-12-18 11:52:06
+-- Dump completed on 2020-01-06  4:48:53
