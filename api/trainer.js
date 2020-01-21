@@ -37,7 +37,7 @@ console.log(AddNewtrainerSuccssed);
     })
     
 } );
-
+ 
 router.get(routeBase,(req,res)=>{
 
 
@@ -72,7 +72,7 @@ router.get(routeBase,(req,res)=>{
   router.put( routeBase + '/:id' , ( req , res ) =>{
 
     let     id=req.params.id;
-
+    console.log(id);
     let trainerName = req.body.name;
     let trainerEmail = req.body.email;
     let trainerNumber = req.body.num;
@@ -91,7 +91,7 @@ router.get(routeBase,(req,res)=>{
     });
 
     edittrainers(trainerName,imgpath,trainerEmail,trainerNumber,traineraddress,trainerbio,id ,(AddNewCoursesFailed , edittrainerSuccssed)=>{
-console.log(edittrainerSuccssed);
+console.log(AddNewCoursesFailed);
       res.send(edittrainerSuccssed);
 
     })

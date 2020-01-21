@@ -83,14 +83,15 @@ function deleteTrainer(id,callback){
 
 }
 
-function edittrainers(trainerName,imgpath,trainerEmail,trainerNumber,traineraddress,trainerbio ,callback,id){
+function edittrainers(trainerName,imgpath,trainerEmail,trainerNumber,traineraddress,trainerbio,id ,callback){
 
 
-    let sql=` UPDATE INTO ${DB_NAME}.trainers SET (trainerName,imgpath,trainerEmail,trainerNumber,traineraddress,trainerbio ) VALUES(
-        '${trainerName}','${imgpath}','${trainerEmail}','${trainerNumber}','${traineraddress}','${trainerbio}') WHERE id= `+id+``;
-
+    let sql=`UPDATE ${DB_NAME}.trainers SET name='${trainerName}',picture='${imgpath}',email='${trainerEmail}',mobile='${trainerNumber}',address='${traineraddress}',short_bio='${trainerbio}' WHERE
+    id= `+id+`;`;
+         console.log(sql)
     createDatabaseConnection((connectError, connection) => {
         if (connectError) {
+           
             callback(connectError, null);
         } else {
             connection.query(sql, (error, result) => {
@@ -102,6 +103,7 @@ function edittrainers(trainerName,imgpath,trainerEmail,trainerNumber,traineraddr
             });
         }
     });
+    
 }
 
 
