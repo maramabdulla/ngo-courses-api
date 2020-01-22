@@ -89,7 +89,7 @@ function updataInfromationCOurses(id,title, dateBegin, dateEnd, locations, range
         });
 }
 function getOneCourse(id,callback){
-    let sql = `SELECT * from ${DB_NAME}.courses WHERE id= `+id+` `;
+    let sql = ` select e.id  , e.title  , e.description ,e.start_date ,e.location ,e.number_of_seats,e.trainer, a.name  from courses e   join trainers a on e.trainer=a.id  where e.id= `+id+` `;
     createDatabaseConnection((connectError, connection) => {
         if (connectError) {
             callback(connectError, null);
@@ -124,8 +124,11 @@ function SearchCourse(title,callback){
      });
  
  }
+ //SELECT  ${DB_NAME}.courses.id , ${DB_NAME}.courses.title ,  ${DB_NAME}.courses.description ,${DB_NAME}.courses.trainer  join ${DB_NAME}.trainers  on ${DB_NAME}.trainer=${DB_NAME}.courses.trainer  JOIN ${DB_NAME}.ngos on  ${DB_NAME}.ngos.id= ${DB_NAME}.courses.id_ngo where  ${DB_NAME}.courses.id_ngo=${id_ngo}
  function getAllCoursesNgo(id_ngo, callback) {
-   const sql = `SELECT  ${DB_NAME}.courses.id , ${DB_NAME}.courses.title ,  ${DB_NAME}.courses.description ,${DB_NAME}.courses.trainer  FROM ${DB_NAME}.courses right outer  JOIN ${DB_NAME}.ngos on  ${DB_NAME}.ngos.id= ${DB_NAME}.courses.id_ngo where  ${DB_NAME}.courses.id_ngo=${id_ngo}`;
+   const sql = `select e.id  , e.title  , e.description , a.name  from courses e   join trainers a on e.trainer=a.id 
+
+   join ngos o on e.id_ngo=o.id;`;
     //const sql = `SELECT * FROM ${DB_NAME}.courses FULL OUTER JOIN ${DB_NAME}.ngos on ${DB_NAME}.courses.'${id_ngo}' = ${DB_NAME}.ngos.'${id}' ORDER BY ${DB_NAME}.courses.title `;
     createDatabaseConnection((connectError, connection) => {
         if (connectError) {
@@ -192,6 +195,7 @@ function UNRegisterTrainee(id_trainee,callback){
         }
     });
 }
+
 module.exports = {
     AddNewCourses, getAllCourses, deleteCourse,getTrainerName,updataInfromationCOurses,getOneCourse,SearchCourse,getAllCoursesNgo,registerTrainee,UNRegisterTrainee,GetRegisteredTrainees
 };

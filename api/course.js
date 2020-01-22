@@ -116,6 +116,6 @@ getAllCoursesNgo(id_ngo,(getAllCoursesByNgoFaild, getAllCoursesByNgosuccssed)=>{
       res.send(UNregisterTraineessuccssed);
     })
   });
-
+ 
   //SELECT * FROM ngos_courses.courses_trainee  WHERE NOT(ngos_courses.courses.id=ngos_courses.courses_trainee.id_course)
     module.exports = router;
