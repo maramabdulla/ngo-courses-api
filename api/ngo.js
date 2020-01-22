@@ -54,10 +54,10 @@ router.post(routeBase + '/login', (req, res) => {
             bcrypt.comparePassword(password,FindPasswordByEmail[0].password,(err,CompareDone)=>{
                 if(CompareDone == true){ 
                     showNameWithLogIn(email , (error , NameUser)=>{
-             
+             let id  = NameUser[0].id
                         let passwordToken = NameUser[0].password
                         let tokenLogIn = jwt.sign({email:email , password:passwordToken},key)
-                    res.send({status:200, token:tokenLogIn})
+                    res.send({status:200, token:tokenLogIn , id:id})
                 })
                 }else{
                     res.send({status:400})

@@ -2,8 +2,10 @@ const
     express = require("express"),
     {AddNewCourses,getAllCourses,deleteCourse,getTrainerName,updataInfromationCOurses,getOneCourse, SearchCourse,getAllCoursesNgo,registerTrainee,UNRegisterTrainee,GetRegisteredTrainees} = require('../coursesRep/courseRepository.js'),
     router = express.Router(),
+    jwt = require("jsonwebtoken"),
     // bodyParser = require('body-parser'),
-    routeBase = '/courses'
+    routeBase = '/courses',
+    key = "iwearft54aw7eg6yq3urt4jy4567idfhjgkuiyut"
 ;
 let pagesize=20;
   router.get(routeBase , (req, res) => {
@@ -25,25 +27,26 @@ let pagesize=20;
   });
   router.delete(routeBase , (req, res) => {
     let id=req.body.id;
-    deleteCourse(id ,(erroeDelete,ssuccssedDelete)=>{
+    let id_ngo=req.body.id_ngo;
+    deleteCourse(id ,id_ngo,(erroeDelete,ssuccssedDelete)=>{
       res.send(ssuccssedDelete);
     });
   })
-    router.post( routeBase ,(req,res)=>{
+    router.post( routeBase + '/:id_ngo',(req,res)=>{
+      let id_ngo=req.params.id_ngo;
         let title = req.body.title;
         let dateBegin=req.body.date_begin;
       let dateEnd=req.body.date_end;
         let locations=req.body.location;
         let range_weight=req.body.number_of_seats;
         let desc=req.body.desctiption;
-        let  trainerName=req.body.req.body;
-    // let trainer=req.body.trainer;
+        let  trainerName=req.body.trainerName;
     const setOfNumder = /[0-9]/;
     const checkName = /^[a-z]|[0-9]/i;
     var dateformat =/^(0?[1-9]|1[012])[\/\-](0?[1-9]|[12][0-9]|3[01])[\/\-]\d{4}$/;
     if(checkName.test(title) == true && dateformat.test(dateBegin) == true  && dateformat.test(dateEnd) == true && setOfNumder.test(range_weight) == true )
     {
-      AddNewCourses(title , dateBegin , dateEnd , locations , range_weight , desc ,trainerName,(AddNewCoursesFailed , AddNewCoursesSuccssed)=>{
+      AddNewCourses(title , dateBegin , dateEnd , locations , range_weight , desc ,trainerName,id_ngo,(AddNewCoursesFailed , AddNewCoursesSuccssed)=>{
         console.log(AddNewCoursesFailed);
         console.log(AddNewCoursesSuccssed);
         res.send(AddNewCoursesSuccssed);
@@ -65,7 +68,7 @@ let pagesize=20;
         let range_weight=req.body.number_of_seats;
         let desc=req.body.desctiption;
     let trainer=req.body.trinername;
-         updataInfromationCOurses(id,title, dateBegin, dateEnd, locations, range_weight, desc,trainer,(errupdata,scusccedupdata)=>{
+         updataInfromationCOurses(id,title, dateBegin, dateEnd, locations, range_weight, desc,(errupdata,scusccedupdata)=>{
         res.send(scusccedupdata)
       })
       
@@ -87,12 +90,14 @@ let pagesize=20;
    })
    router.get(routeBase+'/ngos/:id_ngo' , (req, res) => {
     let id_ngo=req.params.id_ngo;
-    // let id_ngo=req.query.id_ngo;
-    getAllCoursesNgo((getAllCoursesByNgoFaild, getAllCoursesByNgosuccssed)=>{
-      // console.log(getAllCoursesByNgoFaild );
-      // console.log(getAllCoursesByNgosuccssed);
-      res.send(getAllCoursesByNgosuccssed)
-    })    
+getAllCoursesNgo(id_ngo,(getAllCoursesByNgoFaild, getAllCoursesByNgosuccssed)=>{
+  console.log(getAllCoursesByNgoFaild );
+  console.log(getAllCoursesByNgosuccssed);
+  res.send(getAllCoursesByNgosuccssed);
+  // res.send({status : 200 , result:getAllCoursesByNgosuccssed})
+}) 
+    
+    
   });
   router.get(routeBase +'/trainee',(req, res) =>{
     GetRegisteredTrainees((GetRegisteredTraineesFaild,GetRegisteredTraineesSsuccssed)=>{

@@ -2,9 +2,9 @@ const { createDatabaseConnection, DB_NAME } = require('../database/config');
 // ' INSERT INTO ngos_courses.courses (title,start-date,end-datel,location,number_of_seats,description ) VALUES ('+
 //      `'${title}'`+","+`'${dateBegin}'`+","+`'${dateEnd}'`+","+`'${locations}'`+","+`'${range_weight}'`+","+`'${desc}'`+ `'${trinername}'`+')'
 
-function AddNewCourses(title, dateBegin, dateEnd, locations, range_weight, desc,trainerName, callback) {
-    let sql = `INSERT INTO ${DB_NAME}.courses (title,start_date,end_datel,location,number_of_seats,description,trainer ) VALUES(
-'${title}','${dateBegin}','${dateEnd}','${locations}','${range_weight}','${desc}','${trainerName}')`;
+function AddNewCourses(title, dateBegin, dateEnd, locations, range_weight, desc,trainerName,id_ngo ,callback) {
+    let sql = `INSERT INTO ${DB_NAME}.courses (title,start_date,end_datel,location,number_of_seats,description,trainer,id_ngo ) VALUES(
+'${title}','${dateBegin}','${dateEnd}','${locations}','${range_weight}','${desc}','${trainerName}','${id_ngo}')`;
 
     createDatabaseConnection((connectError, connection) => {
         if (connectError) {
@@ -38,8 +38,8 @@ function getAllCourses(callback) {
         }
     });
 }
-function deleteCourse(id, callback) {
-    let sql = `DELETE FROM ${DB_NAME}.courses WHERE id = ${id}`;
+function deleteCourse(id,id_ngo, callback) {
+    let sql = `DELETE FROM ${DB_NAME}.courses WHERE id_ngo = ${id_ngo} and ${DB_NAME}.courses.id=${id}`;
 
     createDatabaseConnection((connectError, connection) => {
         if (connectError) {
@@ -71,9 +71,9 @@ function getTrainerName(callback){
         }
     });
 }
-function updataInfromationCOurses(id,title, dateBegin, dateEnd, locations, range_weight, desc,trainer, callback){
-    let sql=` UPDATE INTO ${DB_NAME}.courses SET (title,start-date,end-datel,location,number_of_seats,description,trainer ) VALUES(
-        '${title}','${dateBegin}','${dateEnd}','${locations}','${range_weight}','${desc}','${trainer}') WHERE id= `+id+``;
+function updataInfromationCOurses(id,title, dateBegin, dateEnd, locations, range_weight, desc,callback){
+    //UPDATE `ngos_courses`.`courses` SET `title`='english', `location`='almafraqqq', `number_of_seats`='33' WHERE `id`='13';
+    let sql=` UPDATE  ${DB_NAME}.courses SET title='${title}', start_date='${dateBegin}',end_datel='${dateEnd}',location='${locations}',number_of_seats='${range_weight}',description ='${desc}' WHERE id= `+id+``;
         createDatabaseConnection((connectError, connection) => {
             if (connectError) {
                 callback(connectError, null);
@@ -124,8 +124,8 @@ function SearchCourse(title,callback){
      });
  
  }
- function getAllCoursesNgo( callback) {
-   const sql = `SELECT * FROM ${DB_NAME}.courses INNER JOIN ${DB_NAME}.ngos on ${DB_NAME}.courses.id_ngo = ${DB_NAME}.ngos.id`;
+ function getAllCoursesNgo(id_ngo, callback) {
+   const sql = `SELECT  ${DB_NAME}.courses.id , ${DB_NAME}.courses.title ,  ${DB_NAME}.courses.description ,${DB_NAME}.courses.trainer  FROM ${DB_NAME}.courses right outer  JOIN ${DB_NAME}.ngos on  ${DB_NAME}.ngos.id= ${DB_NAME}.courses.id_ngo where  ${DB_NAME}.courses.id_ngo=${id_ngo}`;
     //const sql = `SELECT * FROM ${DB_NAME}.courses FULL OUTER JOIN ${DB_NAME}.ngos on ${DB_NAME}.courses.'${id_ngo}' = ${DB_NAME}.ngos.'${id}' ORDER BY ${DB_NAME}.courses.title `;
     createDatabaseConnection((connectError, connection) => {
         if (connectError) {
