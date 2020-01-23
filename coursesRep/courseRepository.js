@@ -126,10 +126,8 @@ function SearchCourse(title,callback){
  }
  //SELECT  ${DB_NAME}.courses.id , ${DB_NAME}.courses.title ,  ${DB_NAME}.courses.description ,${DB_NAME}.courses.trainer  join ${DB_NAME}.trainers  on ${DB_NAME}.trainer=${DB_NAME}.courses.trainer  JOIN ${DB_NAME}.ngos on  ${DB_NAME}.ngos.id= ${DB_NAME}.courses.id_ngo where  ${DB_NAME}.courses.id_ngo=${id_ngo}
  function getAllCoursesNgo(id_ngo, callback) {
-   const sql = `select e.id  , e.title  , e.description ,e.id_ngo , a.name  from courses e   join trainers a on e.trainer=a.id 
-
+  const sql = `select e.id  , e.title  , e.description ,e.id_ngo , a.name  from courses e   join trainers a on e.trainer=a.id 
    join ngos o on e.id_ngo=o.id where e.id_ngo=  `+id_ngo+`;`;
-    //const sql = `SELECT * FROM ${DB_NAME}.courses FULL OUTER JOIN ${DB_NAME}.ngos on ${DB_NAME}.courses.'${id_ngo}' = ${DB_NAME}.ngos.'${id}' ORDER BY ${DB_NAME}.courses.title `;
     createDatabaseConnection((connectError, connection) => {
         if (connectError) {
             callback(connectError, null);
