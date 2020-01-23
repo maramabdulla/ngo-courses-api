@@ -6,10 +6,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/maramabdulla/ngo-courses-api.git"
-  },
+  "repository": "git+https://github.com/maramabdulla/ngo-courses-api.git",
   "author": "Qasemm <qaseem.com34@gmail.com>",
   "license": "ISC",
   "bugs": {
