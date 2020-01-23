@@ -86,7 +86,6 @@ router.get(routeBase,(req,res)=>{
       imgpath = "/imeges/trainers/"+trainerEmail+".png";
   
       fs.writeFile(process.cwd() + imgpath, base64Image, {encoding: 'base64'}, function(err) {
-        console.log(process.cwd() + imgpath);
       });
     }
 

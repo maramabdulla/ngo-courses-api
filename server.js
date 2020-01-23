@@ -17,6 +17,8 @@ app.use(trainee)
 app.use(ngo);
 app.use(trainers);
 app.use('/imeges/trainers', express.static(__dirname + '/imeges/trainers'));
+app.use('/imeges/ngos', express.static(__dirname + '/imeges/ngos'));
+
 app.use(courses);
 app.listen(port, () => {
     console.log(`server is listening on port ${port}`);
