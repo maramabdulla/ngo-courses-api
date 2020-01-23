@@ -4,7 +4,7 @@ const { createDatabaseConnection, DB_NAME } = require('../database/config');
 function addtrainers(trainerName,imgpath,trainerEmail,trainerNumber,traineraddress,trainerbio ,callback,id){
 
 
-    const sql = "INSERT INTO trainers  ( `name`,`picture`, `email`, `mobile`, `address`, `short_bio`) VALUES ( '" +trainerName +" ', '" + imgpath +" ', '" + trainerEmail+" ', '" + trainerNumber + " ', '" + traineraddress + "', '" + trainerbio + "' ) ;" ;
+    const sql = "INSERT INTO trainers  ( `name`,`picture`, `email`, `mobile`, `address`, `short_bio`) VALUES ( '" +trainerName +"', '" + imgpath +"', '" + trainerEmail+"', '" + trainerNumber + "', '" + traineraddress + "', '" + trainerbio + "' ) ;" ;
 
 
     createDatabaseConnection((connectError, connection) => {
@@ -84,9 +84,13 @@ function deleteTrainer(id,callback){
 }
 
 function edittrainers(trainerName,imgpath,trainerEmail,trainerNumber,traineraddress,trainerbio,id ,callback){
+    let params = `name='${trainerName}',email='${trainerEmail}',mobile='${trainerNumber}',address='${traineraddress}',short_bio='${trainerbio}'`;
+    
+    if (imgpath !== '') {
+        params += `,picture='${imgpath}'`
+    }
 
-
-    let sql=`UPDATE ${DB_NAME}.trainers SET name='${trainerName}',picture='${imgpath}',email='${trainerEmail}',mobile='${trainerNumber}',address='${traineraddress}',short_bio='${trainerbio}' WHERE
+    let sql=`UPDATE ${DB_NAME}.trainers SET ${params} WHERE
     id= `+id+`;`;
          console.log(sql)
     createDatabaseConnection((connectError, connection) => {
