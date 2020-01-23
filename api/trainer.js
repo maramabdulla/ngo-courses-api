@@ -19,24 +19,23 @@ router.post( routeBase , ( req , res ) =>{
     let traineraddress = req.body.address;
     let trainerphoto = req.body.photo; 
     let trainerbio = req.body.bio;
-    let base64Image = trainerphoto.split(';base64,').pop();
-    const
-    imgpath = "/imeges/trainers/"+trainerEmail+trainerNumber+".png",
-    fullPath = process.cwd() + imgpath
+    let imgpath = "";
 
-;
-
-    fs.writeFile(fullPath, base64Image, {encoding: 'base64'}, function(err) {
-        console.log(process.cwd());
-    });
+    if(trainerphoto !== ""){
+      let base64Image = trainerphoto.split(';base64,').pop();
+      console.log(base64Image);
+      imgpath = "/imeges/trainers/"+trainerEmail+".png";
+  
+      fs.writeFile(process.cwd() + imgpath, base64Image, {encoding: 'base64'}, function(err) {
+        
+      });
+    }
 
     addtrainers(trainerName,imgpath,trainerEmail,trainerNumber,traineraddress,trainerbio,(AddNewCoursesFailed , AddNewtrainerSuccssed)=>{
-console.log(AddNewtrainerSuccssed);
       res.send(AddNewtrainerSuccssed);
-
-    })
-    
+  })
 } );
+
  
 router.get(routeBase,(req,res)=>{
 
@@ -77,23 +76,22 @@ router.get(routeBase,(req,res)=>{
     let trainerEmail = req.body.email;
     let trainerNumber = req.body.num;
     let traineraddress = req.body.address;
-    let trainerphoto = req.body.photo; 
+    let trainerphoto = req.body.photo || ''; 
     let trainerbio = req.body.bio;
-    let base64Image = trainerphoto.split(';base64,').pop();
-    const
-    imgpath = "/imeges/trainers/"+trainerEmail+trainerNumber+".png",
-    fullPath = process.cwd() + imgpath
+    let imgpath = "";
 
-;
-
-    fs.writeFile(fullPath, base64Image, {encoding: 'base64'}, function(err) {
-        console.log(fullPath);
-    });
+    if(trainerphoto !== ""){
+      let base64Image = trainerphoto.split(';base64,').pop();
+      console.log(base64Image);
+      imgpath = "/imeges/trainers/"+trainerEmail+".png";
+  
+      fs.writeFile(process.cwd() + imgpath, base64Image, {encoding: 'base64'}, function(err) {
+        console.log(process.cwd() + imgpath);
+      });
+    }
 
     edittrainers(trainerName,imgpath,trainerEmail,trainerNumber,traineraddress,trainerbio,id ,(AddNewCoursesFailed , edittrainerSuccssed)=>{
-console.log(AddNewCoursesFailed);
       res.send(edittrainerSuccssed);
-
     })
     
 } );
