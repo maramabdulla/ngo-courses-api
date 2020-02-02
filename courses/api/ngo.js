@@ -134,54 +134,33 @@ router.put(routeBase, (req, res) => {
     imgpath = "/images/ngo/"+new_name+".png",
     fullPath = process.cwd() + imgpath
 
-if(new_logo==""){
-    console.log("No Image")
+
+fs.writeFile(fullPath, base64Image, {encoding: 'base64'}, function(err) {
+    console.log(err)
+    console.log(fullPath);
+});
+
+    console.log(req.body)
     let token = req.headers.authorization.split(":")[1]
     jwt.verify(token, key, (err, result) => {
+        console.log(result)
 
         if (err) {
-            // res.sendStatus(404)
+            res.sendStatus(404)
 
         } else {
             let id = result.id;
-            UpdateNgo(id, new_name, null, new_website, new_bio, (i) => {
-                if (i != false) {
-                    // states(res)
-                
-                }
-            })
-
-
-        }
-    })
-
-}else{
-    console.log("have Image")
-
-    let token = req.headers.authorization.split(":")[1]
-    jwt.verify(token, key, (err, result) => {
-
-        if (err) {
-            // res.sendStatus(404)
-
-        } else {
-            let id = result.id;
-            console.log("TRUE")
-            fs.writeFile(fullPath, base64Image, {encoding: 'base64'}, function(err) {
-                console.log(err)
-            });            
+            console.log(id)
             UpdateNgo(id, new_name, imgpath, new_website, new_bio, (i) => {
                 if (i != false) {
-                    // states(res)
-                
+                    states(res)
+
                 }
             })
 
 
         }
     })
-}
-
 });
 
 

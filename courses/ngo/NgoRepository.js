@@ -84,7 +84,7 @@ function UpdateNgo(id, new_name, new_logo, new_website, new_bio, callback) {
                     console.log(id, new_name)
 
                 } else {
-                    console.log(new_logo)
+
                     Edit(id, new_name, new_bio, new_website, new_logo, (err, result) => {
                         callback(true)
                         console.log(err)
@@ -98,50 +98,27 @@ function UpdateNgo(id, new_name, new_logo, new_website, new_bio, callback) {
     })
 }
 function Edit(id, new_name, new_bio, new_website, new_logo, callback) {
-        if(new_logo==null){
-            let sql = `UPDATE ngos_courses.ngos SET name= '${new_name}',website ='${new_website}', bio= '${new_bio}' WHERE (id = '${id}')`
-            console.log('undefined')
-            createDatabaseConnection((err, connection) => {
-                if (err) {
-                    console.log(err)
-        
+    let sql = `UPDATE ngos_courses.ngos SET name= '${new_name}', logo= '${new_logo}',website ='${new_website}', bio= '${new_bio}' WHERE (id = '${id}')`
+
+    createDatabaseConnection((err, connection) => {
+        if (err) {
+            console.log(err)
+
+        } else {
+
+            connection.query(sql, (error, result) => {
+                if (error) {
+                    console.log(error)
                 } else {
-        
-                    connection.query(sql, (error, result) => {
-                        if (error) {
-                            console.log(error)
-                        } else {
-        
-                        }
-                        callback(error, result)
-        
-                    })
+
                 }
+                callback(error, result)
+
             })
-        
         }
-    // let sql = `UPDATE ngos_courses.ngos SET name= '${new_name}', logo= '${new_logo}',website ='${new_website}', bio= '${new_bio}' WHERE (id = '${id}')`
-    // console.log('test')
-    // createDatabaseConnection((err, connection) => {
-    //     if (err) {
-    //         console.log(err)
+    })
 
-    //     } else {
-
-    //         connection.query(sql, (error, result) => {
-    //             if (error) {
-    //                 console.log(error)
-    //             } else {
-
-    //             }
-    //             callback(error, result)
-
-    //         })
-    //     }
-    // })
 }
-
-
 
 function states(res) {
     res.sendStatus(201)
