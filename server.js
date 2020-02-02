@@ -17,7 +17,7 @@ app.use(trainee)
 app.use(ngo);
 app.use(trainers);
 app.use('/imeges/trainers', express.static(__dirname + '/imeges/trainers'));
-app.use('/images/ngo', express.static(__dirname + '/images/ngo'));
+app.use('/imeges/ngos', express.static(__dirname + '/imeges/ngos'));
 
 app.use(courses);
 app.listen(port, () => {

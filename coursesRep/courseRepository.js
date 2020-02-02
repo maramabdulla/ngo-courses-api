@@ -120,9 +120,8 @@ function SearchCourse(title,callback){
  
  }
  function getAllCoursesNgo(id_ngo, callback) {
-   const sql = `select e.id  , e.title  , e.description , a.name  from courses e   join trainers a on e.trainer=a.id 
-
-   join ngos o on e.id_ngo=o.id where e.id_ngo= `+id_ngo+`;`;
+  const sql = `select e.id  , e.title  , e.description ,e.id_ngo , a.name  from courses e   join trainers a on e.trainer=a.id 
+   join ngos o on e.id_ngo=o.id where e.id_ngo=  `+id_ngo+`;`;
     createDatabaseConnection((connectError, connection) => {
         if (connectError) {
             callback(connectError, null);

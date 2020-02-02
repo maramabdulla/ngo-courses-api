@@ -51,20 +51,18 @@ router.post(routeBase + '/register', (req, res) => {
 router.post(routeBase + '/login', (req, res) => {
     let email = req.body.email;
     let password = req.body.password;
-
+    console.log(password)
     checkPasswordDB(email, (err, FindPasswordByEmail) => {
-        console.log(err)
         console.log(FindPasswordByEmail)
-        if (FindPasswordByEmail.length > 0) {
+     console.log(JSON.stringify(FindPasswordByEmail))
+        if (JSON.stringify(FindPasswordByEmail).length > 0) {
             bcrypt.comparePassword(password, FindPasswordByEmail[0].password, (err, CompareDone) => {
-                console.log(err)
                 if (CompareDone == true) {
                     showNameWithLogIn(email, (error, NameUser) => {
                         let idToken = NameUser[0].id;
-                        console.log(idToken)
                         let passwordToken = NameUser[0].password
                         let tokenLogIn = jwt.sign({ email: email, password: passwordToken, id: idToken }, key)
-                        res.send({ status: 200, token: tokenLogIn , id : idToken})
+                        res.send({ status: 200, token: tokenLogIn })
                     })
                 } else {
                     res.send({ status: 400 })
@@ -129,59 +127,40 @@ router.put(routeBase, (req, res) => {
     let new_bio = req.body.bio;
     let new_website = req.body.website;
     let new_logo = req.body.logo;
-    let base64Image = new_logo.split(';base64,').pop();
-    let
-    imgpath = "/images/ngo/"+new_name+".png",
-    fullPath = process.cwd() + imgpath
+    let imgpath;
+    if(new_logo !== ""){
+        let base64Image = new_logo.split(';base64,').pop();
+        console.log(base64Image);
+        imgpath = "/imeges/ngos/"+new_name+".png";
+        console.log(base64Image)
+        console.log(imgpath)
 
-if(new_logo==""){
-    console.log("No Image")
+        fs.writeFile(process.cwd() + imgpath, base64Image, {encoding: 'base64'}, function(err) {
+          console.log(err)
+        });
+      }
+  
+    console.log(req.body)
     let token = req.headers.authorization.split(":")[1]
     jwt.verify(token, key, (err, result) => {
+        console.log(result)
 
         if (err) {
-            // res.sendStatus(404)
+            res.sendStatus(404)
 
         } else {
             let id = result.id;
-            UpdateNgo(id, new_name, null, new_website, new_bio, (i) => {
-                if (i != false) {
-                    // states(res)
-                
-                }
-            })
-
-
-        }
-    })
-
-}else{
-    console.log("have Image")
-
-    let token = req.headers.authorization.split(":")[1]
-    jwt.verify(token, key, (err, result) => {
-
-        if (err) {
-            // res.sendStatus(404)
-
-        } else {
-            let id = result.id;
-            console.log("TRUE")
-            fs.writeFile(fullPath, base64Image, {encoding: 'base64'}, function(err) {
-                console.log(err)
-            });            
+            console.log(id)
             UpdateNgo(id, new_name, imgpath, new_website, new_bio, (i) => {
                 if (i != false) {
-                    // states(res)
-                
+                    states(res)
+
                 }
             })
 
 
         }
     })
-}
-
 });
 
 
