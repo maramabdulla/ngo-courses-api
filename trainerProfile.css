@@ -1,0 +1,108 @@
+.profile{
+  float: left;
+   position: relative;
+   background-color: white;
+   transition: 0.6s;
+}
+*{
+   outline: none;
+}
+.textBio{
+   width:400px ;
+   height: 200px;
+}
+.profileImg{
+   width: 200px;
+}
+.infoProfile{
+   background-color: #ffffff;
+}
+.Bio{
+   width: 40%; 
+   float: left;
+   margin-left: 4%;
+}
+.savebtn{
+ background-color:#0793C8;
+ height: 38px;
+ width:155px;
+   border-radius: 10px;
+   outline: none;
+   font-size: 16px;
+}
+.Canclebtn{
+ 
+   font-size: 16px;
+   height: 38px;
+ width:155px;
+   border-radius: 10px;
+   outline: none;
+}
+body{
+   background-color: #f0f2f2 ;
+}
+ul {
+   list-style-type: none;
+   margin: 0;
+   padding: 0;
+   overflow: hidden;
+   background-color: #333;
+ }
+li {
+   float: left;
+ }
+ 
+li a {
+   display: block;
+   color: white;
+   text-align: center;
+   padding: 14px 16px;
+   text-decoration: none;
+}
+li a:hover:not(.active) {
+   background-color: rgb(184, 35, 35);
+}
+.active {
+   background-color: #4CAF50;
+ }
+.container{
+   width: 80%;
+   margin: auto;
+}
+.form{
+   width: 30% ;
+   height: 30%;
+   background-color: #ffffff;
+   margin: 15 0 0 15;
+   float: left;
+   border-radius: 10%;
+   cursor: pointer;
+   transition: 0.6s;
+}
+.EditIcon{
+   width: 20px;
+   height: 20px;
+   background-color: #f0f2f2 ;
+}
+.form:hover{
+   transform: scale(1.05);
+}
+.infoProfile{
+   margin-left: 20px;
+}
+img{
+   width: 100%;
+   border:3px none;
+}
+.im{
+   width: 30%;
+   float: left;
+}
+.contnt{
+   width: 60%;
+   height: 100%;
+   background-color: #ffffff;
+   float: right;
+   font-family: inherit;
+   border-radius: 10%;
+}

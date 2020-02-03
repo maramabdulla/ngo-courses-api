@@ -1,0 +1,209 @@
+@import "compass/css3";
+
+* { box-sizing: border-box;
+transition: 0.5s; }
+
+.pa{
+  
+  height: 35px;
+}
+
+.show{
+  position: absolute;
+  margin-left: -32px;
+  margin-top: 4px;
+  width: 10%;
+  font-size: 20px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+outline : none;
+color : white;
+}
+body {
+	font-family: "HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
+  color:white;
+  font-size:12px;
+  background:rgb(126, 159, 160) 
+}
+.email-pp{
+  position: absolute;
+margin-top: -27px;
+text-shadow: 4px 4px 4px red;
+}
+.pass-pp{
+  position: absolute;
+  margin-top: -27px;
+  text-shadow: 4px 4px 4px red;
+}
+
+.name-p{
+  position: absolute;
+top: 133px;
+text-shadow: 4px 4px 4px red;
+}
+.email-p{
+  position: absolute;
+  top: 205px;
+  text-shadow: 4px 4px 4px red;
+}
+.pass-p{
+  position: absolute;
+  top: 272px;
+  text-shadow: 4px 4px 4px red;
+}
+
+.log{
+  cursor: pointer;
+}
+.div {
+ 	background:#111; 
+  width:300px;
+  margin:30px auto;
+  border-radius:0.4em;
+  border:1px solid #191919;
+  overflow:hidden;
+  position:relative;
+  box-shadow: 0 5px 10px 5px rgba(0,0,0,0.2);
+}
+
+.div:after {
+  content:"";
+  display:block;
+  position:absolute;
+  height:1px;
+  width:100px;
+  left:20%;
+  background:linear-gradient(left, #111, #444, #b6b6b8, #444, #111);
+  top:0;
+}
+
+.div:before {
+ 	content:"";
+  display:block;
+  position:absolute;
+  width:8px;
+  height:5px;
+  border-radius:50%;
+  left:34%;
+  top:-7px;
+  box-shadow: 0 0 6px 4px #fff;
+}
+
+.inset {
+ 	padding:20px; 
+  border-top:1px solid #19191a;
+}
+
+.div h1 {
+  font-size:18px;
+  text-shadow:0 1px 0 black;
+  text-align:center;
+  padding:15px 0;
+  border-bottom:1px solid rgba(0,0,0,1);
+  position:relative;
+}
+
+.div h1:after {
+ 	content:"";
+  display:block;
+  width:250px;
+  height:100px;
+  position:absolute;
+  top:0;
+  left:50px;
+  pointer-events:none;
+  transform:rotate(70deg);
+  background:linear-gradient(50deg, rgba(255,255,255,0.15), rgba(0,0,0,0));
+  
+}
+
+label {
+ 	color:#666;
+  display:block;
+  padding-bottom:9px;
+}
+
+input[type=text],
+input[type=password] {
+  outline: none;
+ 	width:100%;
+  padding:8px 5px;
+  background:linear-gradient(#1a1919, #3f4142);
+  border:2px solid #222;
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.1);
+  border-radius:0.3em;
+  margin-bottom:20px;
+  color: #739996;
+}
+input[type=text],
+input[type=password]:focus{
+translate: 10px 10px 10px;
+}
+
+label[for=remember]{
+ 	color:white;
+  display:inline-block;
+  padding-bottom:0;
+  padding-top:5px;
+}
+
+input[type=checkbox] {
+ 	display:inline-block;
+  vertical-align:top;
+}
+
+.p-container {
+ 	padding:0 20px 20px 20px; 
+}
+
+.p-container:after {
+ 	clear:both;
+  display:table;
+  content:"";
+}
+
+.p-container span {
+  display:block;
+  float:left;
+  color:#0d93ff;
+  padding-top:8px;
+}
+
+.but{
+ 	padding:5px 20px;
+  border:1px solid rgba(0,0,0,0.4);
+  text-shadow:0 -1px 0 rgba(0,0,0,0.4);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.3),
+    inset 0 10px 10px rgba(255,255,255,0.1);
+  border-radius:0.3em;
+  background:#0184ff;
+  color:white;
+  float:right;
+  font-weight:bold;
+  cursor:pointer;
+  font-size:13px;
+}
+#msg{
+margin-left: 40%;
+  visibility: hidden;
+  min-width: 250px;
+  background: rgb(19, 0, 88);
+  color: rgb(236, 164, 164);
+  text-align: center;
+  border-radius: 20px;
+  padding: 5px;
+  position: fixed;
+  z-index: 1;
+  height: 50px;
+  top: 20px;
+  font-size: 25px;
+  transition: 3s;
+  color: red;
+}
+#msg.show{
+  visibility: visible;
+transition: 3s;
+}
