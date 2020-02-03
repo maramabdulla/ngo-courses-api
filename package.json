@@ -1,0 +1,30 @@
+{
+  "name": "ngo-courses-api",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maramabdulla/ngo-courses-api.git"
+  },
+  "author": "Qasemm <qaseem.com34@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/maramabdulla/ngo-courses-api/issues"
+  },
+  "homepage": "https://github.com/maramabdulla/ngo-courses-api#readme",
+  "dependencies": {
+    "bcrypt": "^3.0.7",
+    "bcryptjs": "^2.4.3",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mysql": "^2.17.1",
+    "nodemon": "^2.0.2",
+    "path": "^0.12.7"
+  },
+  "devDependencies": {},
+  "description": ""
+}
